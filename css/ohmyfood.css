@@ -1,0 +1,640 @@
+/* 
+
+ ██████╗ ██╗  ██╗███╗   ███╗██╗   ██╗███████╗ ██████╗  ██████╗ ██████╗ 
+██╔═══██╗██║  ██║████╗ ████║╚██╗ ██╔╝██╔════╝██╔═══██╗██╔═══██╗██╔══██╗
+██║   ██║███████║██╔████╔██║ ╚████╔╝ █████╗  ██║   ██║██║   ██║██║  ██║
+██║   ██║██╔══██║██║╚██╔╝██║  ╚██╔╝  ██╔══╝  ██║   ██║██║   ██║██║  ██║
+╚██████╔╝██║  ██║██║ ╚═╝ ██║   ██║   ██║     ╚██████╔╝╚██████╔╝██████╔╝
+ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝   ╚═╝   ╚═╝      ╚═════╝  ╚═════╝ ╚═════╝ 
+                                                                       
+Code développé par : Aurélien COLOGNE
+Projet réalisé dans le cadre de la formation Développeur Frontend sur Openclassrooms.
+
+Réalisé en 2021.
+
+*/
+
+
+/* CODE GLOBAL */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: rgba(234, 234, 234);
+    font-family: 'Roboto', sans-serif;
+}
+
+button {
+    font-size: 100%;
+    text-transform: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+}
+
+a {
+    color: inherit;
+    text-transform: none;
+    text-decoration: none;
+}
+
+h1,
+h3,
+p {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* ANIMATIONS */
+
+@keyframes checked-in {
+    0% {
+        right: -20%;
+    }
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes checked-out {
+    0% {
+        right: 0;
+    }
+    100% {
+        right: -20%;
+    }
+}
+
+@keyframes resize-in {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 80%;
+    }
+}
+
+@keyframes resize-out {
+    0% {
+        width: 80%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes heart-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes element-in {
+    0% {
+        opacity: 0;
+        transform: translateY(10vh);
+        visibility: hidden;
+    }
+    100% {
+        opacity: 1;
+        transform: none;
+        visibility: visible;
+    }
+}
+
+
+/* HEADER OHMYFOOD */
+
+.header {
+    background-color: rgba(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    position: relative;
+    box-shadow: 0 0 #000, 0 0 #0000, 0 0 #000, 0 0 #0000, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.header__fleche {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    position: absolute;
+    left: 1.25rem;
+    color: rgba(0, 0, 0);
+}
+
+.header__logo {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-family: 'Shrikhand', cursive;
+}
+
+.header__img {
+    height: 20rem;
+    -o-object-fit: cover;
+    object-fit: cover;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+}
+
+.header__ville {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+}
+
+.header__ville-icon {
+    margin-right: 1.25rem;
+}
+
+.header__fleche-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* TOP OHMYFOOD */
+
+.top {
+    background-color: rgba(246, 246, 246);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.top__titre {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.top__description {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-top: 0.5rem;
+    color: rgba(107, 114, 128);
+}
+
+
+/* Fonctionnement */
+
+.operation {
+    background-color: rgba(255, 255, 255);
+    padding: 1.25rem;
+}
+
+.operation__titre {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-top: 1.25rem;
+}
+
+.operation__container {
+    display: grid;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    gap: 1.25rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.operation__item {
+    display: flex;
+    position: relative;
+}
+
+.operation__item-circle {
+    background-color: rgba(147, 86, 220);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.5rem;
+    position: absolute;
+    left: -0.5rem;
+    top: 33.333333%;
+    color: rgba(255, 255, 255);
+    width: 1.5rem;
+    z-index: 10;
+}
+
+.operation__item-container {
+    background-color: rgba(246, 246, 246);
+}
+
+.operation__item-container:hover {
+    background-color: rgba(245, 237, 255);
+}
+
+.operation__item-container {
+    border-radius: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    position: relative;
+    box-shadow: 0 0 #000, 0 0 #0000, 0 0 #000, 0 0 #0000, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    color: rgba(156, 163, 175);
+}
+
+.operation__item-container:hover {
+    color: rgba(147, 86, 220);
+}
+
+.operation__item-container {
+    width: 100%;
+}
+
+.operation__item-icon {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-right: 1.25rem;
+    margin-left: 1.25rem;
+}
+
+.operation__item-text {
+    font-weight: 500;
+    color: rgba(0, 0, 0);
+}
+
+
+/* RESTAURANTS */
+
+.restaurants {
+    background-color: rgba(246, 246, 246);
+    padding: 1.25rem;
+}
+
+.restaurants__titre {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-top: 1.25rem;
+}
+
+.restaurants__container {
+    display: grid;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.restaurants__item {
+    background-color: rgba(255, 255, 255);
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 #000, 0 0 #0000, 0 0 #000, 0 0 #0000, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.restaurants__item-img {
+    height: 12rem;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+}
+
+.restaurants__item-new {
+    background-color: rgba(153, 226, 208);
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    color: rgba(4, 120, 87);
+}
+
+.restaurants__item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+}
+
+.restaurants__item-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.restaurants__item-titre {
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+
+/* menu OHMYFOOD */
+
+.menu {
+    background-color: rgba(246, 246, 246);
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    margin-top: -2.5rem;
+    padding: 1.25rem;
+    position: relative;
+    z-index: 10;
+}
+
+.menu__titre-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+}
+
+.menu__titre {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-family: 'Shrikhand', cursive;
+}
+
+.menu__titre-icon:hover .fas {
+    display: inline-block;
+    animation: heart-in .5s;
+}
+
+.menu__titre-icon:hover .far {
+    display: none !important;
+}
+
+.menu__titre-icon--is-hover {
+    background: linear-gradient(5deg, rgba(147, 86, 220, 1) 0%, rgba(255, 121, 218, 1) 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    display: none;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-right: 0.75rem;
+}
+
+.menu__titre-icon--is-not-hover {
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-right: 0.75rem;
+}
+
+.menu__list {
+    display: grid;
+    margin-top: 1.25rem;
+    gap: 1rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.menu__list-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu__item-titre {
+    text-transform: uppercase;
+    font-weight: inherit;
+}
+
+.menu__item-titre::after {
+    content: ' ';
+    display: block;
+    height: 3px;
+    margin-top: 3px;
+    width: 40px;
+    background-color: rgba(153, 226, 208);
+}
+
+.menu__item-container {
+    animation: element-in 1.2s;
+    background-color: rgba(255, 255, 255);
+    border-radius: 1rem;
+    margin-top: 1rem;
+    overflow: hidden;
+    padding: 0.75rem;
+    position: relative;
+    box-shadow: 0 0 #000, 0 0 #0000, 0 0 #000, 0 0 #0000, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.menu__item-container:nth-of-type(1) {
+    animation: element-in 1.2s;
+}
+
+.menu__item-container:nth-of-type(2) {
+    animation: element-in 1.4s;
+}
+
+.menu__item-container:nth-of-type(3) {
+    animation: element-in 1.6s;
+}
+
+.menu__item-container:nth-of-type(4) {
+    animation: element-in 1.8s;
+}
+
+.menu__item-container:hover .menu__select {
+    right: 0;
+    animation: checked-in .4s;
+}
+
+.menu__item-container:hover .menu__item-description {
+    animation: resize-in .4s;
+    width: 80%;
+}
+
+.menu__item-container:hover .menu__item-container-titre {
+    animation: resize-in .4s;
+    width: 80%;
+}
+
+.menu__item-container:hover .menu__select-icon {
+    transform: rotate(2turn);
+    transition: transform .4s ease-in-out;
+}
+
+.menu__item-container-titre {
+    animation: resize-out .4s;
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.menu__item-description {
+    animation: resize-out .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu__description-text,
+.menu__item-container-titre {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.menu__description-prix {
+    font-weight: 700;
+}
+
+.menu__select {
+    right: -20%;
+    animation: checked-out .4s;
+    background-color: rgba(153, 226, 208);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    width: 20%;
+}
+
+.menu__select-icon {
+    color: rgba(255, 255, 255);
+}
+
+.menu__commande-btn,
+.top__btn {
+    border-radius: 9999px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5rem;
+    margin-bottom: 2.75rem;
+    overflow: hidden;
+    padding: 1rem;
+    position: relative;
+    box-shadow: 0 0 #000, 0 0 #0000, 0 0 #000, 0 0 #0000, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    color: rgba(255, 255, 255);
+    width: 16rem;
+}
+
+.menu__commande-btn:hover .menu__commande-bg-2,
+.top__btn:hover .top__btn-bg-2 {
+    opacity: 1;
+    right: 0px;
+}
+
+.menu__commande-bg-1,
+.top__btn-bg-1 {
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 0;
+    background: linear-gradient(5deg, rgba(147, 86, 220, 1) 0%, rgba(255, 121, 218, 1) 100%);
+}
+
+.menu__commande-bg-2,
+.top__btn-bg-2 {
+    transition: all ease .5s;
+    z-index: 1;
+}
+
+.menu__commande-bg-2,
+.top__btn-bg-2 {
+    background-color: rgba(147, 86, 220);
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.menu__commande-bg-2,
+.top__btn-bg-2 {
+    right: 100%;
+}
+
+.menu__commande-text,
+.top__btn-text {
+    position: relative;
+    z-index: 10;
+}
+
+
+/* FOOTER OHMYFOOD */
+
+.footer {
+    background-color: rgba(53, 53, 53);
+    padding: 1.25rem;
+    color: rgba(255, 255, 255);
+}
+
+.footer__logo {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-family: 'Shrikhand', cursive;
+}
+
+.footer__liens {
+    list-style-type: none;
+    margin-top: 0.75rem;
+}
+
+.footer__lien {
+    cursor: pointer;
+}
+
+.footer__lien-icon {
+    margin-right: 0.75rem;
+}
+
+
+/*
+RESPONSIVE DESIGN
+Breakpoint de la console de Google Chrome
+*/
+
+@media (min-width: 768px) {
+    .operation__container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .restaurants__container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .restaurants__container {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .menu__list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
